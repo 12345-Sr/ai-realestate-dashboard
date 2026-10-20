@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Deific Digital Realty — AI Calling & Site Visit Portal</title>
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #04100c;
+      --sidebar-bg: #071913;
+      --sidebar-border: #0d2e23;
+      --sidebar-text: #e2e8f0;
+      --sidebar-muted: #809a90;
+      --sidebar-active: #0f3f30;
+      
+      --surface: #0a2119;
+      --surface-subtle: #0d2820;
+      --surface-card: #0c251d;
+      --border: #143d30;
+      --border-subtle: #194b3c;
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-soft: #64748b;
+      
+      /* Primary Emerald & Gold Luxury Palette */
+      --emerald-primary: #10b981;
+      --emerald-hover: #059669;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      
+      --gold-primary: #f59e0b;
+      --gold-subtle: rgba(245, 158, 11, 0.15);
+      --gold-border: rgba(245, 158, 11, 0.3);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Container Views */
+    .view-container {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+    }
+    .view-container.active {
+      display: flex;
+    }
+
+    /* ========================================================
+       1. LOGIN VIEW (LUXURY REAL ESTATE PORTAL)
+       ======================================================== */
+    #loginView {
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      background: radial-gradient(circle at 50% 15%, #0f392c 0%, #082119 50%, #030e0b 100%);
+      overflow: hidden;
+    }
+
+    .login-ambient-orb {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(245, 158, 11, 0.08) 40%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      filter: blur(60px);
+    }
+
+    .login-grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(16, 185, 129, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 185, 129, 0.06) 1px, transparent 1px);
+      background-size: 38px 38px;
+      pointer-events: none;
+      mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 80%);
+    }
+
+    .login-card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 440px;
+      background: rgba(10, 31, 24, 0.88);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-xl);
+      padding: 38px 34px 28px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 45px rgba(16, 185, 129, 0.15);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      animation: cardIn 0.5s ease-out;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      margin-bottom: 20px;
+    }
+
+    .login-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .login-badge-text {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #6ee7b7;
+    }
+
+    .realty-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .realty-logo-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      margin-bottom: 14px;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .realty-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.4px;
+    }
+
+    .realty-subtitle {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #cbd5e1;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 7px;
+    }
+
+    .login-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .login-input-icon {
+      position: absolute;
+      left: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      pointer-events: none;
+      transition: color 0.2s ease;
+    }
+
+    .login-input-wrap:focus-within .login-input-icon {
+      color: #10b981;
+    }
+
+    .login-input {
+      width: 100%;
+      min-height: 48px;
+      font-size: 15px;
+      padding: 10px 42px 10px 44px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: var(--radius-md);
+      background: rgba(4, 16, 12, 0.7);
+      color: #ffffff;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .login-input::placeholder {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .login-input:focus {
+      outline: none;
+      border-color: #10b981;
+      background: rgba(4, 16, 12, 0.95);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+    .login-eye-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      padding: 6px;
+      color: #64748b;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: color 0.2s;
+    }
+    .login-eye-btn:hover {
+      color: #e2e8f0;
+    }
+
+    .btn-login-submit {
+      width: 100%;
+      min-height: 48px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 10px 24px -4px rgba(16, 185, 129, 0.45);
+      transition: all 0.2s ease;
+      margin-top: 10px;
+    }
+
+    .btn-login-submit:hover {
+      background: linear-gradient(135deg, #34d399 0%, #047857 100%);
+      box-shadow: 0 12px 28px -2px rgba(16, 185, 129, 0.6);
+      transform: translateY(-1px);
+    }
+
+    .login-error {
+      display: none;
+      margin-bottom: 18px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+      font-size: 13px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .login-footer-security {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 22px;
+      color: #64748b;
+      font-size: 11.5px;
+    }
+    .login-footer-security svg {
+      color: #10b981;
+    }
+
+    /* ========================================================
+       2. DASHBOARD APP SHELL
+       ======================================================== */
+    #appView {
+      flex-direction: row;
+      background: var(--bg);
+    }
+
+    .app-sidebar {
+      width: 270px;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--sidebar-border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      min-height: 100vh;
+      position: sticky;
+      top: 0;
+    }
+
+    .sidebar-header {
+      padding: 24px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--sidebar-border);
+    }
+
+    .sidebar-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #10b981, #047857);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .sidebar-title-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.2px;
+    }
+
+    .sidebar-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #6ee7b7;
+      margin-top: 2px;
+    }
+
+    .sidebar-nav {
+      padding: 18px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .nav-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--sidebar-muted);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .nav-btn svg {
+      width: 19px;
+      height: 19px;
+      flex-shrink: 0;
+    }
+
+    .nav-btn:hover {
+      color: #ffffff;
+      background: rgba(16, 185, 129, 0.08);
+      border-color: rgba(16, 185, 129, 0.15);
+    }
+
+    .nav-btn.active {
+      color: #ffffff;
+      background: var(--sidebar-active);
+      border-color: rgba(16, 185, 129, 0.3);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+
+    .sidebar-footer {
+      padding: 18px 16px;
+      border-top: 1px solid var(--sidebar-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(4, 16, 12, 0.5);
+    }
+
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .user-info-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .user-info-role {
+      font-size: 11px;
+      color: #94a3b8;
+      text-transform: capitalize;
+    }
+
+    .btn-logout {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 8px;
+      transition: color 0.2s;
+    }
+    .btn-logout:hover {
+      color: #ef4444;
+    }
+
+    /* App Main Body */
+    .app-main {
+      flex: 1;
+      min-width: 0;
+      padding: 32px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .tab-section {
+      display: none;
+    }
+    .tab-section.active {
+      display: block;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* KPI Cards Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .kpi-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #10b981, #059669);
+    }
+    .kpi-card.gold::before {
+      background: linear-gradient(90deg, #f59e0b, #d97706);
+    }
+    .kpi-card.blue::before {
+      background: linear-gradient(90deg, #0284c7, #0369a1);
+    }
+
+    .kpi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .kpi-icon-wrap {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .kpi-card.gold .kpi-icon-wrap {
+      background: rgba(245, 158, 11, 0.12);
+      color: #f59e0b;
+    }
+    .kpi-card.blue .kpi-icon-wrap {
+      background: rgba(2, 132, 199, 0.12);
+      color: #0284c7;
+    }
+
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.6px;
+    }
+
+    .kpi-desc {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    /* Content Cards & Tables */
+    .content-box {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .filter-input {
+      min-height: 42px;
+      padding: 8px 14px;
+      font-size: 13.5px;
+      border-radius: var(--radius-sm);
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      color: #ffffff;
+      font-family: inherit;
+    }
+    .filter-input:focus {
+      outline: none;
+      border-color: var(--emerald-primary);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      padding: 12px 16px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 14px 16px;
+      font-size: 13.5px;
+      color: #e2e8f0;
+      border-bottom: 1px solid rgba(20, 61, 48, 0.6);
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: rgba(16, 185, 129, 0.04);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    .badge-booked {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+    .badge-inquiry {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+    }
+    .badge-inbound {
+      background: rgba(2, 132, 199, 0.15);
+      border: 1px solid rgba(2, 132, 199, 0.35);
+      color: #38bdf8;
+    }
+    .badge-outbound {
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      color: #c084fc;
+    }
+
+    .btn-action {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-action:hover {
+      background: #10b981;
+      color: #ffffff;
+    }
+
+    /* Projects Showcase Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+    }
+    .project-card:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    .project-badge-type {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #f59e0b;
+      letter-spacing: 0.5px;
+    }
+
+    .project-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .project-location {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .project-price {
+      font-size: 16px;
+      font-weight: 700;
+      color: #10b981;
+      margin-top: 4px;
+    }
+
+    .project-amenities-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .amenity-pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Call Drawer */
+    .drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 90;
+      backdrop-filter: blur(4px);
+    }
+    .drawer-backdrop.active {
+      display: block;
+    }
+
+    .call-drawer {
+      position: fixed;
+      top: 0;
+      right: -600px;
+      width: 100%;
+      max-width: 540px;
+      height: 100vh;
+      background: #081d17;
+      border-left: 1px solid var(--border);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -10px 0 35px rgba(0, 0, 0, 0.8);
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .call-drawer.active {
+      right: 0;
+    }
+
+    .drawer-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .drawer-body {
+      padding: 24px;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .drawer-audio-player {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .transcript-bubble {
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .transcript-bubble.caller {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      align-self: flex-start;
+    }
+    .transcript-bubble.assistant {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+      align-self: flex-end;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 110;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 440px;
+      background: #0a241c;
+      border: 1px solid var(--emerald-primary);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================
+       SCREEN 1: LOGIN VIEW
+       ======================================================== -->
+  <div id="loginView" class="view-container active">
+    <div class="login-ambient-orb"></div>
+    <div class="login-grid-overlay"></div>
+
+    <div class="login-card">
+      <div class="realty-brand">
+        <div class="login-badge-pill">
+          <span class="login-badge-dot"></span>
+          <span class="login-badge-text">Monica AI Voice Agent • Real Estate</span>
+        </div>
+        <div class="realty-logo-icon">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </div>
+        <h1 class="realty-title">Deific Digital Realty</h1>
+        <p class="realty-subtitle">AI Calling & Site Visit Portal</p>
+      </div>
+
+      <div id="loginAlert" class="login-error"></div>
+
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+        <div class="form-group">
+          <label class="form-label" for="loginUsername">Staff Username</label>
+          <div class="login-input-wrap">
+            <span class="login-input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </span>
+            <input class="login-input" id="loginUsername" type="text" autocomplete="username" required placeholder="Enter username (e.g. admin)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">Password</label>
+          <div class="login-input-wrap">
+            <span class="login-input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </span>
+            <input class="login-input" id="loginPassword" type="password" autocomplete="current-password" required placeholder="Enter password">
+            <button type="button" class="login-eye-btn" onclick="togglePasswordVisibility()" title="Toggle password visibility" tabindex="-1">
+              <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-login-submit" id="loginBtn">
+          <span>Sign In to Realty Dashboard</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+
+        <div class="login-footer-security">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span>End-to-End Encrypted • realestate_portal DB</span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       SCREEN 2: APP SHELL & TABS
+       ======================================================== -->
+  <div id="appView" class="view-container">
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          </svg>
+        </div>
+        <div class="sidebar-title-wrap">
+          <span class="sidebar-title">Deific Realty</span>
+          <span class="sidebar-status-pill">
+            <span class="login-badge-dot" style="width:6px; height:6px;"></span>
+            <span>Monica AI Live 24/7</span>
+          </span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-tab="tabOverview" onclick="switchTab('tabOverview')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+          <span>Overview Analytics</span>
+        </button>
+        <button class="nav-btn" data-tab="tabCalls" onclick="switchTab('tabCalls')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span>Calls & Inquiries</span>
+        </button>
+        <button class="nav-btn" data-tab="tabVisits" onclick="switchTab('tabVisits')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span>Site Visits Scheduled</span>
+        </button>
+        <button class="nav-btn" data-tab="tabCatalog" onclick="switchTab('tabCatalog')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          <span>Projects Catalog</span>
+        </button>
+        <button class="nav-btn" id="navTeamTab" data-tab="tabTeam" onclick="switchTab('tabTeam')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>Team Management</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-badge">
+          <div class="user-avatar" id="avatarLetter">A</div>
+          <div>
+            <div class="user-info-name" id="userNameLabel">Admin User</div>
+            <div class="user-info-role" id="userRoleLabel">Administrator</div>
+          </div>
+        </div>
+        <button class="btn-logout" onclick="handleLogout()" title="Sign Out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <!-- TAB 1: OVERVIEW -->
+      <section id="tabOverview" class="tab-section active">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Real Estate Operations Overview</h2>
+            <p class="section-subtitle">Real-time caller inquiries and site visit conversions from Monica AI.</p>
+          </div>
+          <button class="btn-action" onclick="loadAllData()" style="padding: 8px 16px;">↻ Refresh Live</button>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-label">Total Calls</span>
+              <div class="kpi-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </div>
+            </div>
+            <div class="kpi-value" id="kpiTotalCalls">0</div>
+            <div class="kpi-desc">Inbound & outbound property inquiries</div>
+          </div>
+
+          <div class="kpi-card gold">
+            <div class="kpi-top">
+              <span class="kpi-label">Site Visits Booked</span>
+              <div class="kpi-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              </div>
+            </div>
+            <div class="kpi-value" id="kpiTotalVisits">0</div>
+            <div class="kpi-desc" id="kpiPendingDesc">0 pending confirmation</div>
+          </div>
+
+          <div class="kpi-card blue">
+            <div class="kpi-top">
+              <span class="kpi-label">Conversion Rate</span>
+              <div class="kpi-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+              </div>
+            </div>
+            <div class="kpi-value" id="kpiConversion">0%</div>
+            <div class="kpi-desc">Callers converted to scheduled visits</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-label">Avg Duration</span>
+              <div class="kpi-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+            </div>
+            <div class="kpi-value" id="kpiAvgDuration">0s</div>
+            <div class="kpi-desc">Average consultation time</div>
+          </div>
+        </div>
+
+        <!-- Project Performance Summary -->
+        <div class="content-box">
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 16px;">Property Demand & Inquiry Distribution</h3>
+          <div class="projects-grid" id="overviewProjectsGrid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: CALLS & INQUIRIES -->
+      <section id="tabCalls" class="tab-section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Caller Inquiries & Audio Recordings</h2>
+            <p class="section-subtitle">Real-time transcripts, lead status, and audio playback.</p>
+          </div>
+        </div>
+
+        <div class="content-box">
+          <div class="filter-bar">
+            <input type="text" id="callSearch" class="filter-input" placeholder="Search caller name, phone..." oninput="filterCallsTable()">
+            <select id="callFilterStatus" class="filter-input" onchange="filterCallsTable()">
+              <option value="all">All Outcomes</option>
+              <option value="true">Site Visit Booked</option>
+              <option value="false">Inquiry Only</option>
+            </select>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Caller / Client</th>
+                <th>Phone Number</th>
+                <th>Direction</th>
+                <th>Duration</th>
+                <th>Outcome</th>
+                <th>Date & Time</th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="callsTableBody">
+              <tr><td colspan="7" style="text-align:center; color:#64748b;">Loading caller records...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 3: SITE VISITS SCHEDULED -->
+      <section id="tabVisits" class="tab-section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Site Visits Scheduled</h2>
+            <p class="section-subtitle">Confirmed property tours and appointments booked by callers.</p>
+          </div>
+        </div>
+
+        <div class="content-box">
+          <div class="filter-bar">
+            <select id="visitFilterProject" class="filter-input" onchange="loadAppointments()">
+              <option value="all">All Projects</option>
+              <option value="City Greens Residency">City Greens Residency</option>
+              <option value="Royal Palm Villas">Royal Palm Villas</option>
+              <option value="Green Valley Plots">Green Valley Plots</option>
+              <option value="Apex Commercial Plaza">Apex Commercial Plaza</option>
+            </select>
+            <select id="visitFilterStatus" class="filter-input" onchange="loadAppointments()">
+              <option value="all">All Statuses</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="pending_confirmation">Pending Confirmation</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Client Name</th>
+                <th>Phone</th>
+                <th>Project / Property</th>
+                <th>Visit Date</th>
+                <th>Time Slot</th>
+                <th>Status</th>
+                <th style="text-align: right;">Update Status</th>
+              </tr>
+            </thead>
+            <tbody id="visitsTableBody">
+              <tr><td colspan="7" style="text-align:center; color:#64748b;">Loading site visits...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 4: PROPERTY CATALOG -->
+      <section id="tabCatalog" class="tab-section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Active Property Catalog</h2>
+            <p class="section-subtitle">Configurations, pricing, and shift timings Monica AI offers to callers.</p>
+          </div>
+        </div>
+
+        <div class="projects-grid" id="catalogGrid">
+          <!-- Populated via JS -->
+        </div>
+      </section>
+
+      <!-- TAB 5: TEAM MANAGEMENT -->
+      <section id="tabTeam" class="tab-section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Team Access Control</h2>
+            <p class="section-subtitle">Manage logins for Sales Managers, Site Coordinators, and Receptionists.</p>
+          </div>
+          <button class="btn-action" onclick="openAddUserModal()">+ Add Team Member</button>
+        </div>
+
+        <div class="content-box">
+          <table>
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Full Name</th>
+                <th>Role</th>
+                <th>Assigned Project</th>
+                <th>Created</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="teamTableBody">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ========================================================
+       CALL DETAILS DRAWER
+       ======================================================== -->
+  <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer()"></div>
+  <aside class="call-drawer" id="callDrawer">
+    <div class="drawer-header">
+      <div>
+        <h3 id="drawerCallerTitle" style="font-size: 18px; font-weight: 800; color: #ffffff;">Caller Transcript</h3>
+        <p id="drawerCallerSubtitle" style="font-size: 12px; color: #94a3b8; margin-top: 2px;">—</p>
+      </div>
+      <button class="btn-action" onclick="closeDrawer()" style="padding: 4px 10px;">✕ Close</button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Audio Streaming -->
+      <div class="drawer-audio-player">
+        <div style="font-size: 11.5px; font-weight: 700; color: #10b981; text-transform: uppercase; margin-bottom: 8px;">Audio Stream</div>
+        <audio id="drawerAudioPlayer" controls style="width: 100%; height: 36px;"></audio>
+      </div>
+
+      <!-- Dialogue Bubbles -->
+      <div style="font-size: 11.5px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Transcript Conversation</div>
+      <div id="drawerTranscriptContainer" style="display: flex; flex-direction: column; gap: 8px;">
+        <!-- Dialogue bubbles -->
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========================================================
+       ADD USER MODAL
+       ======================================================== -->
+  <div class="modal-backdrop" id="addUserModal">
+    <div class="modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+        <h3 style="font-size: 18px; font-weight: 800; color: #ffffff;">Create Staff Login</h3>
+        <button class="btn-action" onclick="closeAddUserModal()" style="padding: 4px 8px;">✕</button>
+      </div>
+
+      <div id="addUserError" class="login-error"></div>
+
+      <form onsubmit="handleCreateUser(event)">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input class="filter-input" id="newUserName" style="width:100%;" required placeholder="e.g. Rahul Sharma">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input class="filter-input" id="newUserUsername" style="width:100%;" required placeholder="e.g. rahul">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input class="filter-input" id="newUserPassword" type="password" style="width:100%;" required placeholder="Min 6 characters">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Role</label>
+          <select class="filter-input" id="newUserRole" style="width:100%;">
+            <option value="sales_agent">Sales Agent</option>
+            <option value="site_coordinator">Site Coordinator</option>
+            <option value="admin">Administrator</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Assigned Project</label>
+          <select class="filter-input" id="newUserProject" style="width:100%;">
+            <option value="All Projects">All Projects</option>
+            <option value="City Greens Residency">City Greens Residency</option>
+            <option value="Royal Palm Villas">Royal Palm Villas</option>
+            <option value="Green Valley Plots">Green Valley Plots</option>
+            <option value="Apex Commercial Plaza">Apex Commercial Plaza</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-login-submit" style="margin-top: 14px;">Create Staff Login</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentUser = null;
+    let allCalls = [];
+    let allProjects = [];
+
+    // Initialize App
+    window.addEventListener("DOMContentLoaded", async () => {
+      await checkAuth();
+    });
+
+    async function checkAuth() {
+      try {
+        const res = await fetch("/api/me");
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          currentUser = data.user;
+          renderApp();
+        } else {
+          showLoginView();
+        }
+      } catch (e) {
+        showLoginView();
+      }
+    }
+
+    function showLoginView() {
+      document.getElementById("loginView").classList.add("active");
+      document.getElementById("appView").classList.remove("active");
+    }
+
+    function renderApp() {
+      document.getElementById("loginView").classList.remove("active");
+      document.getElementById("appView").classList.add("active");
+
+      document.getElementById("userNameLabel").textContent = currentUser.name || currentUser.username;
+      document.getElementById("userRoleLabel").textContent = currentUser.role.replace("_", " ");
+      document.getElementById("avatarLetter").textContent = (currentUser.name || currentUser.username).charAt(0).toUpperCase();
+
+      if (currentUser.role !== "admin") {
+        document.getElementById("navTeamTab").style.display = "none";
+      } else {
+        document.getElementById("navTeamTab").style.display = "flex";
+      }
+
+      switchTab("tabOverview");
+      loadAllData();
+      setInterval(() => loadAllData(), 20000); // 20s live sync
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-section").forEach(sec => sec.classList.remove("active"));
+      document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
+
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add("active");
+
+      const activeBtn = document.querySelector(`.nav-btn[data-tab="${tabId}"]`);
+      if (activeBtn) activeBtn.classList.add("active");
+
+      if (tabId === "tabTeam") loadTeamUsers();
+      if (tabId === "tabCatalog") loadCatalog();
+      if (tabId === "tabVisits") loadAppointments();
+      if (tabId === "tabCalls") loadCalls();
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const alertBox = document.getElementById("loginAlert");
+      alertBox.style.display = "none";
+
+      const username = document.getElementById("loginUsername").value.trim();
+      const password = document.getElementById("loginPassword").value;
+
+      try {
+        const res = await fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          currentUser = data.user;
+          document.getElementById("loginPassword").value = "";
+          renderApp();
+        } else {
+          alertBox.textContent = data.error || "Authentication failed.";
+          alertBox.style.display = "block";
+        }
+      } catch (err) {
+        alertBox.textContent = "Server connection error.";
+        alertBox.style.display = "block";
+      }
+    }
+
+    async function handleLogout() {
+      try {
+        await fetch("/api/logout", { method: "POST" });
+      } catch (e) {}
+      currentUser = null;
+      allCalls = [];
+      showLoginView();
+    }
+
+    function togglePasswordVisibility() {
+      const pwd = document.getElementById("loginPassword");
+      const icon = document.getElementById("eyeIcon");
+      if (pwd.type === "password") {
+        pwd.type = "text";
+        icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+      } else {
+        pwd.type = "password";
+        icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+      }
+    }
+
+    // Load Live Analytics
+    async function loadAllData() {
+      try {
+        const [resAnalytics, resCalls] = await Promise.all([
+          fetch("/api/analytics"),
+          fetch("/api/calls")
+        ]);
+
+        const dataA = await resAnalytics.json();
+        if (dataA.ok && dataA.stats) {
+          document.getElementById("kpiTotalCalls").textContent = dataA.stats.totalCalls;
+          document.getElementById("kpiTotalVisits").textContent = dataA.stats.totalVisits;
+          document.getElementById("kpiPendingDesc").textContent = `${dataA.stats.pendingVisits} pending confirmation`;
+          document.getElementById("kpiConversion").textContent = `${dataA.stats.conversionRate}%`;
+          document.getElementById("kpiAvgDuration").textContent = `${dataA.stats.avgDurationSeconds}s`;
+
+          renderOverviewProjects(dataA.stats.projectBreakdown);
+        }
+
+        const dataC = await resCalls.json();
+        if (dataC.ok) {
+          allCalls = dataC.calls || [];
+          renderCallsTable(allCalls);
+        }
+      } catch (err) {
+        console.warn("Failed to load metrics:", err);
+      }
+    }
+
+    function renderOverviewProjects(breakdown) {
+      const container = document.getElementById("overviewProjectsGrid");
+      if (!container) return;
+      container.innerHTML = "";
+
+      Object.entries(breakdown).forEach(([name, info]) => {
+        const card = document.createElement("div");
+        card.className = "project-card";
+        card.innerHTML = `
+          <div class="project-badge-type">${info.category}</div>
+          <div class="project-name">${name}</div>
+          <div class="project-location">📍 ${info.location}</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+            <span style="font-size:12px; color:#94a3b8;">Site Visits:</span>
+            <span style="font-size:16px; font-weight:800; color:#10b981;">${info.totalVisits}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Calls Table
+    async function loadCalls() {
+      try {
+        const res = await fetch("/api/calls");
+        const data = await res.json();
+        if (data.ok) {
+          allCalls = data.calls || [];
+          renderCallsTable(allCalls);
+        }
+      } catch (e) {}
+    }
+
+    function renderCallsTable(calls) {
+      const tbody = document.getElementById("callsTableBody");
+      if (!tbody) return;
+
+      if (!calls || calls.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#64748b; padding: 24px;">No call records found yet. Real callers will appear here automatically!</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = calls.map(c => {
+        const name = c.clientName || c.patientName || c.callerName || "Prospective Buyer";
+        const date = c.startedAt ? new Date(c.startedAt).toLocaleString("en-IN", { dateStyle: "short", timeStyle: "short" }) : "—";
+        const isBooked = c.appointmentBooked;
+        return `
+          <tr>
+            <td><strong>${escapeHtml(name)}</strong></td>
+            <td>${escapeHtml(c.from || "—")}</td>
+            <td><span class="badge ${c.direction === "inbound" ? "badge-inbound" : "badge-outbound"}">${c.direction || "inbound"}</span></td>
+            <td>${c.durationSeconds ? c.durationSeconds + "s" : "—"}</td>
+            <td>
+              <span class="badge ${isBooked ? "badge-booked" : "badge-inquiry"}">
+                ${isBooked ? "✓ Site Visit Booked" : "Property Inquiry"}
+              </span>
+            </td>
+            <td>${date}</td>
+            <td style="text-align:right;">
+              <button class="btn-action" onclick="openDrawer('${c.callSid}')">View & Listen</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function filterCallsTable() {
+      const search = document.getElementById("callSearch").value.toLowerCase().trim();
+      const status = document.getElementById("callFilterStatus").value;
+
+      const filtered = allCalls.filter(c => {
+        const name = (c.clientName || c.patientName || c.callerName || "").toLowerCase();
+        const phone = (c.from || "").toLowerCase();
+        const matchesSearch = !search || name.includes(search) || phone.includes(search);
+
+        let matchesStatus = true;
+        if (status === "true") matchesStatus = c.appointmentBooked === true;
+        if (status === "false") matchesStatus = !c.appointmentBooked;
+
+        return matchesSearch && matchesStatus;
+      });
+
+      renderCallsTable(filtered);
+    }
+
+    // Call Drawer
+    async function openDrawer(callSid) {
+      try {
+        const res = await fetch(`/api/calls/${callSid}`);
+        const data = await res.json();
+        if (!data.ok || !data.call) return;
+        const call = data.call;
+
+        const name = call.clientName || call.patientName || "Valued Client";
+        document.getElementById("drawerCallerTitle").textContent = name;
+        document.getElementById("drawerCallerSubtitle").textContent = `Phone: ${call.from || "—"} • Duration: ${call.durationSeconds || 0}s`;
+
+        const player = document.getElementById("drawerAudioPlayer");
+        player.src = `/api/calls/${callSid}/audio`;
+
+        const transcriptBox = document.getElementById("drawerTranscriptContainer");
+        transcriptBox.innerHTML = "";
+
+        if (call.transcript && call.transcript.length > 0) {
+          call.transcript.forEach(turn => {
+            const bubble = document.createElement("div");
+            bubble.className = `transcript-bubble ${turn.role === "assistant" ? "assistant" : "caller"}`;
+            bubble.innerHTML = `<strong>${turn.role === "assistant" ? "Monica (AI Agent)" : name}:</strong><br>${escapeHtml(turn.text)}`;
+            transcriptBox.appendChild(bubble);
+          });
+        } else {
+          transcriptBox.innerHTML = `<div style="color:#64748b; font-size:13px; text-align:center; padding:20px;">No transcript available for this call.</div>`;
+        }
+
+        document.getElementById("drawerBackdrop").classList.add("active");
+        document.getElementById("callDrawer").classList.add("active");
+      } catch (e) {
+        console.error("Failed to open drawer:", e);
+      }
+    }
+
+    function closeDrawer() {
+      document.getElementById("drawerBackdrop").classList.remove("active");
+      document.getElementById("callDrawer").classList.remove("active");
+      const player = document.getElementById("drawerAudioPlayer");
+      player.pause();
+      player.src = "";
+    }
+
+    // Site Visits Table
+    async function loadAppointments() {
+      const project = document.getElementById("visitFilterProject").value;
+      const status = document.getElementById("visitFilterStatus").value;
+
+      try {
+        const res = await fetch(`/api/appointments?project=${encodeURIComponent(project)}&status=${encodeURIComponent(status)}`);
+        const data = await res.json();
+        const tbody = document.getElementById("visitsTableBody");
+
+        if (!data.ok || !data.appointments || data.appointments.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#64748b; padding:24px;">No site visits scheduled matching filter.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = data.appointments.map(a => {
+          const name = a.clientName || a.patientName || "Valued Client";
+          const proj = a.projectName || a.doctorName || "City Greens Residency";
+          return `
+            <tr>
+              <td><strong>${escapeHtml(name)}</strong></td>
+              <td>${escapeHtml(a.phone || "—")}</td>
+              <td><span style="color:#10b981; font-weight:600;">${escapeHtml(proj)}</span></td>
+              <td>${a.date} (${a.dateLabel || ""})</td>
+              <td><strong>${a.time}</strong></td>
+              <td><span class="badge ${a.status === "confirmed" ? "badge-booked" : "badge-inquiry"}">${a.status}</span></td>
+              <td style="text-align:right;">
+                ${a.status !== "confirmed" ? `<button class="btn-action" onclick="updateVisitStatus('${a._id}', 'confirmed')">Confirm</button>` : ""}
+                ${a.status !== "cancelled" ? `<button class="btn-action" style="margin-left:4px; color:#fca5a5; border-color:rgba(239,68,68,0.3);" onclick="updateVisitStatus('${a._id}', 'cancelled')">Cancel</button>` : ""}
+              </td>
+            </tr>
+          `;
+        }).join("");
+      } catch (e) {
+        console.error("Error loading visits:", e);
+      }
+    }
+
+    async function updateVisitStatus(id, status) {
+      try {
+        await fetch(`/api/appointments/${id}/status`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status })
+        });
+        loadAppointments();
+        loadAllData();
+      } catch (e) {}
+    }
+
+    // Catalog Showcase
+    async function loadCatalog() {
+      try {
+        const res = await fetch("/api/catalog");
+        const data = await res.json();
+        const container = document.getElementById("catalogGrid");
+        if (!data.ok || !data.projects) return;
+
+        container.innerHTML = data.projects.map(p => `
+          <div class="project-card">
+            <div class="project-badge-type">${p.category}</div>
+            <div class="project-name">${p.name}</div>
+            <div class="project-location">📍 ${p.location}</div>
+            <div class="project-price">${p.priceRange}</div>
+            <div style="font-size:12px; color:#94a3b8;"><strong>Units:</strong> ${p.configurations.join(", ")}</div>
+            <div style="font-size:12px; color:#94a3b8;"><strong>Possession:</strong> ${p.possession}</div>
+            <div class="project-amenities-pills">
+              ${p.amenities.map(a => `<span class="amenity-pill">${a}</span>`).join("")}
+            </div>
+            <div style="margin-top:8px; font-size:11.5px; color:#6ee7b7; background:rgba(16,185,129,0.1); padding:6px 10px; border-radius:6px;">
+              ⏱ Shifts: ${p.shifts.join(" • ")}
+            </div>
+          </div>
+        `).join("");
+      } catch (e) {}
+    }
+
+    // Team Management
+    async function loadTeamUsers() {
+      try {
+        const res = await fetch("/api/users");
+        const data = await res.json();
+        const tbody = document.getElementById("teamTableBody");
+        if (!data.ok || !data.users) return;
+
+        tbody.innerHTML = data.users.map(u => `
+          <tr>
+            <td><strong>${escapeHtml(u.username)}</strong></td>
+            <td>${escapeHtml(u.name || u.username)}</td>
+            <td><span class="badge ${u.role === "admin" ? "badge-booked" : "badge-inquiry"}">${u.role}</span></td>
+            <td>${escapeHtml(u.assignedProject || "All Projects")}</td>
+            <td>${u.createdAt ? new Date(u.createdAt).toLocaleDateString() : "—"}</td>
+            <td style="text-align:right;">
+              ${u.username !== "admin" ? `<button class="btn-action" style="color:#fca5a5; border-color:rgba(239,68,68,0.3);" onclick="deleteTeamUser('${u.username}')">Remove</button>` : `<span style="font-size:11px; color:#64748b;">Primary Admin</span>`}
+            </td>
+          </tr>
+        `).join("");
+      } catch (e) {}
+    }
+
+    function openAddUserModal() {
+      document.getElementById("addUserError").style.display = "none";
+      document.getElementById("addUserModal").classList.add("active");
+    }
+    function closeAddUserModal() {
+      document.getElementById("addUserModal").classList.remove("active");
+    }
+
+    async function handleCreateUser(e) {
+      e.preventDefault();
+      const errBox = document.getElementById("addUserError");
+      errBox.style.display = "none";
+
+      const name = document.getElementById("newUserName").value;
+      const username = document.getElementById("newUserUsername").value;
+      const password = document.getElementById("newUserPassword").value;
+      const role = document.getElementById("newUserRole").value;
+      const assignedProject = document.getElementById("newUserProject").value;
+
+      try {
+        const res = await fetch("/api/users", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, username, password, role, assignedProject })
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          closeAddUserModal();
+          loadTeamUsers();
+        } else {
+          errBox.textContent = data.error || "Failed to create user.";
+          errBox.style.display = "block";
+        }
+      } catch (err) {
+        errBox.textContent = "Server error.";
+        errBox.style.display = "block";
+      }
+    }
+
+    async function deleteTeamUser(username) {
+      if (!confirm(`Remove staff login for '${username}'?`)) return;
+      try {
+        await fetch(`/api/users/${username}`, { method: "DELETE" });
+        loadTeamUsers();
+      } catch (e) {}
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>
